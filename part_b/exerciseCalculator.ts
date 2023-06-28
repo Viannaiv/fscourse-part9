@@ -11,7 +11,7 @@ interface Result {
   average: number;
 }
 
-const calculateExercises = (target: number, dailyHours: number[]) : Result => {
+export const calculateExercises = (target: number, dailyHours: number[]) : Result => {
   const days = dailyHours.length;
   const hourSum = dailyHours.reduce((acc, val) => acc + val, 0);
   const averageHours = hourSum / days;
@@ -37,11 +37,11 @@ const calculateExercises = (target: number, dailyHours: number[]) : Result => {
     target: target,
     average: averageHours
   };
-}
+};
 
 const parseArguments = (args: string[]): {numValue: number, arrayValue: number[]} => {
   if (args.length < 4) throw new Error('Not enough arguments');
-  const numValue = Number(args[2])
+  const numValue = Number(args[2]);
   const numArray = args.slice(3).map(val => Number(val));
 
   if (numValue && numArray.every(val => !isNaN(val))) {
@@ -52,13 +52,13 @@ const parseArguments = (args: string[]): {numValue: number, arrayValue: number[]
   } else {
     throw new Error('All provided values must be numbers');
   }
-}
+};
 
 try {
   const { numValue, arrayValue } = parseArguments(process.argv);
   console.log(calculateExercises(numValue, arrayValue));
 } catch (error: unknown) {
-  let errorMessage = 'Something went wrong: ';
+  let errorMessage = 'Something went wrong. ';
   if (error instanceof Error) {
     errorMessage += error.message;
   }

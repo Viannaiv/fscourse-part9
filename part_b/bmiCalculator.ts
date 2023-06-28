@@ -13,7 +13,7 @@ export const calculateBmi = (height: number, weight: number) : string => {
   if (roundedBmi >= 30 && roundedBmi <= 34.9) return 'Obese (Class I)';
   if (roundedBmi >= 35 && roundedBmi <= 39.9) return 'Obese (Class II)';
   return 'Obese (Class III)';
-}
+};
 
 const parseBmiArguments = (args: string[]): {height: number, weight: number} => {
   if (args.length < 4) throw new Error('Not enough arguments');
@@ -27,7 +27,7 @@ const parseBmiArguments = (args: string[]): {height: number, weight: number} => 
   } else {
     throw new Error('Height(cm) and weight(kg) must be numbers');
   }
-}
+};
 
 try {
   const { height, weight } = parseBmiArguments(process.argv);
