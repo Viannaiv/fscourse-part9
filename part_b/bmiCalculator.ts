@@ -1,5 +1,5 @@
 
-const calculateBmi = (height: number, weight: number) : string => {
+export const calculateBmi = (height: number, weight: number) : string => {
   if (height <= 0 || weight <= 0) 
     throw new Error('Height(cm) and weight(kg) can not be 0 or less');
   const bmi = weight / Math.pow((height / 100) , 2);
@@ -12,7 +12,7 @@ const calculateBmi = (height: number, weight: number) : string => {
   if (roundedBmi >= 25 && roundedBmi <= 29.9) return 'Overweight (Pre-obese)';
   if (roundedBmi >= 30 && roundedBmi <= 34.9) return 'Obese (Class I)';
   if (roundedBmi >= 35 && roundedBmi <= 39.9) return 'Obese (Class II)';
-  if (roundedBmi >= 40) return 'Obese (Class III)';
+  return 'Obese (Class III)';
 }
 
 const parseBmiArguments = (args: string[]): {height: number, weight: number} => {
