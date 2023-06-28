@@ -11,21 +11,20 @@ interface Result {
   average: number;
 }
 
-const calculateExercises = (dailyHours: number[], target: number) : Result => {
+const calculateExercises = (target: number, dailyHours: number[]) : Result => {
   const days = dailyHours.length;
-  if (days === 0) throw new Error('No daily exercise hours provided');
   const hourSum = dailyHours.reduce((acc, val) => acc + val, 0);
-  const averageHours = hourSum / days
+  const averageHours = hourSum / days;
 
-  const ratingBasis = averageHours / Math.max(target, 1)
-  let rating: Rating = 1
-  let ratingDescription = 'bad'
-  if (ratingBasis > 1) {
-    rating = 3
-    ratingDescription = 'good'
+  const ratingBasis = averageHours / Math.max(target, 1);
+  let rating: Rating = 1;
+  let ratingDescription = 'bad';
+  if (ratingBasis >= 1) {
+    rating = 3;
+    ratingDescription = 'good';
   } else if (ratingBasis > 0.5) {
-    rating = 2
-    ratingDescription = 'not too bad but could be better'
+    rating = 2;
+    ratingDescription = 'not too bad but could be better';
   } 
   
 
@@ -37,7 +36,31 @@ const calculateExercises = (dailyHours: number[], target: number) : Result => {
     ratingDescription: ratingDescription,
     target: target,
     average: averageHours
+  };
+}
+
+const parseArguments = (args: string[]): {numValue: number, arrayValue: number[]} => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+  const numValue = Number(args[2])
+  const numArray = args.slice(3).map(val => Number(val));
+
+  if (numValue && numArray.every(val => !isNaN(val))) {
+    return {
+      numValue: numValue,
+      arrayValue: numArray
+    };
+  } else {
+    throw new Error('All provided values must be numbers');
   }
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+try {
+  const { numValue, arrayValue } = parseArguments(process.argv);
+  console.log(calculateExercises(numValue, arrayValue));
+} catch (error: unknown) {
+  let errorMessage = 'Something went wrong: ';
+  if (error instanceof Error) {
+    errorMessage += error.message;
+  }
+  console.log(errorMessage);
+}
