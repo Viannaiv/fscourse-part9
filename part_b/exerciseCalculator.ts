@@ -13,6 +13,8 @@ interface Result {
 
 export const calculateExercises = (target: number, dailyHours: number[]) : Result => {
   const days = dailyHours.length;
+  if (days === 0) 
+    throw new Error('No daily exercise hour information was provided.');
   const hourSum = dailyHours.reduce((acc, val) => acc + val, 0);
   const averageHours = hourSum / days;
 

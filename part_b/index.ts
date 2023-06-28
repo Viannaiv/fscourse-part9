@@ -31,19 +31,6 @@ app.get('/bmi', (req, res) => {
   } 
 });
 
-/*
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { height, weight } = req.query;
-  const heightAsNum = Number(height);
-  const weightAsNum = Number(weight);
-
-  console.log(!height, !weight, heightAsNum, weightAsNum)
-
-  if (isNaN(heightAsNum) || (!height) 
-    || isNaN(weightAsNum) || (!weight) )
-    return res.status(400).send({ error: 'malformatted parameters'});
-*/
-
 app.post('/exercises', (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { daily_exercises, target } = req.body;
@@ -60,8 +47,16 @@ app.post('/exercises', (req, res) => {
     return res.status(400).send({ error: 'malformatted parameters' });
   }
 
-  const result = calculateExercises(targetAsNum, hoursAsNum);
-  return res.send({ result });
+  try {
+    const result = calculateExercises(targetAsNum, hoursAsNum);
+    return res.send({ result });
+  } catch (error: unknown) {
+    let errorMessage = 'Exercise hours could not be evaluated. ';
+    if (error instanceof Error) {
+      errorMessage += error.message;
+    }
+    return res.status(400).send({ error: errorMessage});
+  }
 });
 
 const PORT = 3002;
