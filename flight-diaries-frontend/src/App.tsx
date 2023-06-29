@@ -8,6 +8,7 @@ const App = () => {
   const [weather, setWeather] = useState('');
   const [visibility, setVisibility] = useState('');
   const [comment, setComment] = useState('');
+  const [error, SetError] = useState('');
 
   useEffect(() => {
     getAllEntries().then(data => {
@@ -22,24 +23,28 @@ const App = () => {
       weather: weather as Weather,
       visibility: visibility as Visibility,
       comment: comment
-    }
-
-    console.log('newEntry:', newEntry)
+    };
 
     createEntry(newEntry).then(data => {
-      console.log('Rdata:', data)
-      setEntries(entries.concat(data))
+      setEntries(entries.concat(data as DiaryEntry))
+      error && SetError('')
+      setDate('')
+      setWeather('')
+      setVisibility('')
+      setComment('')
+    }).catch ((error: unknown)  =>{
+      let errorMessage = 'Error: ';
+      if (error instanceof Error) {
+        errorMessage += error.message;
+      }
+      SetError(errorMessage);
     })
-
-    setDate('')
-    setWeather('')
-    setVisibility('')
-    setComment('')
   };
 
   return (
     <div>
       <h2>Add a new entry</h2>
+      <p style={{ color: 'red' }}>{error && error}</p>
       <form onSubmit={addEntry}>
         <label> Date: <input
           value={date}

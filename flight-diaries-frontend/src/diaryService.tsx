@@ -13,4 +13,14 @@ export const createEntry = (object: NewDiaryEntry) => {
   return axios
     .post<DiaryEntry>(baseUrl, object)
     .then(response => response.data)
+    .catch(error => {
+      if (axios.isAxiosError(error)) {
+        if (!error.response || !error.response.data) console.error(error);
+        throw new Error((error.response && error.response.data) 
+          ? error.response.data
+          : "Could not add entry. Check your input.");
+      } else {
+        console.error(error);
+      }
+    })
 }
