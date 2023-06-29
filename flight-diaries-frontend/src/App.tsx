@@ -38,13 +38,7 @@ const App = () => {
       SetError(errorMessage);
     })
   };
-   enum Weather {
-    Sunny = 'sunny',
-    Rainy = 'rainy',
-    Cloudy = 'cloudy',
-    Stormy = 'stormy',
-    Windy = 'windy',
-  }
+  
   return (
     <div>
       <h2>Add a new entry</h2>
