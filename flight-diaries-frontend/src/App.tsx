@@ -29,8 +29,6 @@ const App = () => {
       setEntries(entries.concat(data as DiaryEntry))
       error && SetError('')
       setDate('')
-      setWeather('')
-      setVisibility('')
       setComment('')
     }).catch ((error: unknown)  =>{
       let errorMessage = 'Error: ';
@@ -40,24 +38,64 @@ const App = () => {
       SetError(errorMessage);
     })
   };
-
+   enum Weather {
+    Sunny = 'sunny',
+    Rainy = 'rainy',
+    Cloudy = 'cloudy',
+    Stormy = 'stormy',
+    Windy = 'windy',
+  }
   return (
     <div>
       <h2>Add a new entry</h2>
       <p style={{ color: 'red' }}>{error && error}</p>
       <form onSubmit={addEntry}>
-        <label> Date: <input
+        <label> Date: <input type="date"
           value={date}
           onChange={(event) => setDate(event.target.value)} 
         /></label><br/>
-        <label> Weather:<input
-          value={weather}
-          onChange={(event) => setWeather(event.target.value)} 
-          /></label><br/>
-        <label> Visibility:<input
-          value={visibility}
-          onChange={(event) => setVisibility(event.target.value)} 
-          /></label><br/>
+        <label> Weather:
+            <label> sunny
+              <input type="radio" name="weather" value="sunny" 
+                onChange={(event) => setWeather(event.target.value)}
+            />
+            </label>
+            <label> rainy
+              <input type="radio" name="weather" value="rainy" 
+                onChange={(event) => setWeather(event.target.value)}/>
+            </label>
+            <label> cloudy
+              <input type="radio"name="weather" value="cloudy" 
+                onChange={(event) => setWeather(event.target.value)}/>
+            </label>
+            <label> stormy
+              <input type="radio" name="weather" value="stormy" 
+                onChange={(event) => setWeather(event.target.value)}/>
+            </label>
+            <label> windy
+              <input type="radio" name="weather" value="windy" 
+                onChange={(event) => setWeather(event.target.value)}/>
+            </label>
+        </label><br/>
+        <label> Visibility:
+            <label> great
+              <input type="radio" name="visibility" value="great" 
+                onChange={(event) => setVisibility(event.target.value)}
+            />
+            </label>
+            <label> good
+              <input type="radio" name="visibility" value="good" 
+                onChange={(event) => setVisibility(event.target.value)}/>
+            </label>
+            <label> ok
+              <input type="radio" name="visibility" value="ok" 
+                onChange={(event) => setVisibility(event.target.value)}/>
+            </label>
+            <label> poor
+              <input type="radio"name="visibility" value="poor" 
+                onChange={(event) => setVisibility(event.target.value)}/>
+            </label>
+        </label><br/>
         <label> Comment:<input
           value={comment}
           onChange={(event) => setComment(event.target.value)} 
